@@ -16,14 +16,17 @@ from rasterio.plot import show
 import glob
 import os
 
-# set filepaths
-dirpath = r'/Users/apj/Documents/_HY/DEM_artefact_detection/ArcticDemRasti/ArcticDEM_processed/'
+# set filepaths. Variables with same name are ment for different projects
+#dirpath = r'/Users/apj/Documents/_HY/DEM_artefact_detection/ArcticDemRasti/ArcticDEM_processed/'
+#out_fp = r'/Users/apj/Documents/_HY/DEM_artefact_detection/ArcticDemRasti/Merged/ArcticDEM_merged.tif'
 
-out_fp = r'/Users/apj/Documents/_HY/DEM_artefact_detection/ArcticDemRasti/Merged/ArcticDEM_merged.tif'
+# 
+dirpath = r"/Users/apj/Documents/_HY/Kurssit/Glacier_deposits_terrains_and_deglaciation_dynamics/data/3/"
+out_fp = r"/Users/apj/Documents/_HY/Kurssit/Glacier_deposits_terrains_and_deglaciation_dynamics/data/3_merged_lzw.tif"
 
 
 # search criteria for files
-search_criteria = '*_dem.tif'
+search_criteria = '*.tif'
 q = os.path.join(dirpath, search_criteria)
 print(q)
 
@@ -56,12 +59,16 @@ out_meta.update({"driver": "GTiff",
                   "height": mosaic.shape[1],
                   "width": mosaic.shape[2],
                   "transform": out_trans,
-                  "crs": "+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs "
+                  "crs": "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
                   }
                  )
 
+# proj4 Polar stereographic north
+# "crs": "+proj=stere +lat_0=90 +lat_ts=70 +lon_0=-45 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs "
+                  
+
 # write file
-with rasterio.open(out_fp, "w", **out_meta) as dest:
+with rasterio.open(out_fp, "w", **out_meta, compress = "LZW") as dest:
     dest.write(mosaic)
 
 

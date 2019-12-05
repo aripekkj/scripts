@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Clip raster by extent
+Clip raster by extent (either polygon or bounding box)
 
-This script is for clipping raster files in a folder by a bounding box
+This script is for clipping raster files 
 
 
-KESKEN
 
 """
 
@@ -27,24 +26,35 @@ import pycrs
 
 
 # set filepaths
-fp = r'/Users/apj/Documents/_HY/DEM_artefact_detection/ArcticDemRasti/SETSM_WV01_20130606_102001002336E800_1020010021398600_seg1_2m_v2.0_dem.tif'
+fp = r'E:\LocalData\aripekkj\TA\Bhutan\Hansen\lossyear\Hansen_GFC2015_lossyear_merge.tif'
+fp_shape = r'E:\LocalData\aripekkj\TA\Bhutan\Bhutan_borders\btn_admbnda_adm0_bnlc.shp'
 
-out_tif = r'/Users/apj/Documents/_HY/DEM_artefact_detection/ArcticDemRasti/SETSM_WV01_20130606_clip.tif'
+out_tif = r'E:\LocalData\aripekkj\TA\Bhutan\Hansen\lossyear\Hansen_GFC2015_lossyear_merge_clip.tif'
 
 # open raster in read mode
 data = rasterio.open(fp)
 
-# create bounding box
-minx, miny = 26.001953839, 69.917662762
-maxx, maxy = 26.451952629, 70.054088643
+# plot raster
+#show((data, 1), cmap='terrain')
 
-bbox = box(minx, miny, maxx, maxy)
+# read shapefile
+sh = gpd.read_file(fp_shape)
+
+# check crs of files
+data.crs
+sh.crs
+
+# create bounding box
+#minx, miny = 26.001953839, 69.917662762
+#maxx, maxy = 26.451952629, 70.054088643
+
+#bbox = box(minx, miny, maxx, maxy)
 
 # create geodataframe of the bounding box
-geo = gpd.GeoDataFrame({'geometry': bbox}, index=[0], crs=from_epsg(4326))
+#geo = gpd.GeoDataFrame({'geometry': bbox}, index=[0], crs=from_epsg(4326))
 
 # reproject to same CRS as raster
-geo = geo.to_crs(crs=data.crs.data)
+#geo = geo.to_crs(crs=data.crs.data)
 
 # function
 def getFeatures(gdf):
@@ -53,12 +63,12 @@ def getFeatures(gdf):
     return [json.loads(gdf.to_json())['features'][0]['geometry']]
 
 # get features using function
-coords = getFeatures(geo)
+coords = getFeatures(sh)
 
 print(coords)
 
 # clipping
-out_img, out_transform = mask(raster=data, shapes=coords, crop=True)
+out_img, out_transform = mask(data, shapes=coords, crop=True)
 
 # Copy the metadata. Just to check here
 out_meta = data.meta.copy()
@@ -74,7 +84,7 @@ out_meta.update({"driver": "GTiff",
                  "width": out_img.shape[2],
                  "transform": out_transform,
                }
-                        )
+    )
 #   metadata update skipped
 #   "crs": pycrs.parser.from_epsg_code(epsg_code).to_proj4()
 

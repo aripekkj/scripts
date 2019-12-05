@@ -21,8 +21,8 @@ import os
 #out_fp = r'/Users/apj/Documents/_HY/DEM_artefact_detection/ArcticDemRasti/Merged/ArcticDEM_merged.tif'
 
 # 
-dirpath = r"/Users/apj/Documents/_HY/Kurssit/Glacier_deposits_terrains_and_deglaciation_dynamics/data/3/"
-out_fp = r"/Users/apj/Documents/_HY/Kurssit/Glacier_deposits_terrains_and_deglaciation_dynamics/data/3_merged_lzw.tif"
+dirpath = r"E:\LocalData\aripekkj\TA\Bhutan\Hansen\last"
+out_fp = r"E:\LocalData\aripekkj\TA\Bhutan\Hansen\last\Hansen_GFC2015_last_merge.tif"
 
 
 # search criteria for files
@@ -59,7 +59,7 @@ out_meta.update({"driver": "GTiff",
                   "height": mosaic.shape[1],
                   "width": mosaic.shape[2],
                   "transform": out_trans,
-                  "crs": "+proj=utm +zone=35 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+                  "crs": "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs "
                   }
                  )
 

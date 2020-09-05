@@ -35,7 +35,7 @@ fp = r'C:\Users\Ap\Documents\ProtectedAreas\Madagascar\WDPA\WDPA_VIIRSfire_sums_
 firecount = gpd.read_file(fp)
 
 # select only columns that are needed
-fire = firecount[['WDPA_PID', 'NAME', 'diff_2020_', 'geometry']]
+fire = firecount[['WDPA_PID', 'NAME', 'diff_2020_', 'cat', 'geometry']]
 fire['geo_id'] = fire.index.astype(str)
 # create columns for x and y coordinates
 fire['x'] = fire.geometry.centroid.x
@@ -58,12 +58,12 @@ m = folium.Map(location=loc, zoom_start=7, tiles='Stamen Terrain')
 folium.Choropleth(
     geo_data=fire,
     data=fire,
-    columns=['geo_id', 'diff_2020_'],
+    columns=['geo_id', 'cat'],
     key_on='feature.id',
     fill_color='YlOrRd',
     fill_opacity=0.7,
     line_opacity=0.5,
-    legend_name='Difference in active fire data between 2020 and mean from 2015-2019',
+    legend_name='-1: less fires in 2020, 1: more fires in 2020',
     bins=4,
     reset=True
 ).add_to(m)
@@ -137,7 +137,7 @@ marker_cluster = MarkerCluster(locations, popups=popuplist, icons=iconlist)
 m.add_child(marker_cluster)
 
 # save map
-m.save("folium_map_2408.html")
+m.save("folium_map_2508.html")
 
 
 

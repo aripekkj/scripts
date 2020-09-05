@@ -18,21 +18,25 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # filepaths
-fp = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\fire_030405_2019_PAs_nh.shp'
-fp2 = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\fire_030405_2020_PAs_nh.shp'
+fp = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\Madagascar\fire_01032015_30062019_Madagascar_PAs.shp'
+fp2 = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\Madagascar\fire_01032020_30062020_Madagascar_PAs.shp'
 fp3 = r'C:\Users\Ap\Documents\ProtectedAreas\Madagascar\WDPA\WDPA_Oct2019_Land_0_1manualClean.shp'
 
 # set date time index range
-idx19 = pd.date_range('2019-03-01', '2019-05-17')
-idx20 = pd.date_range('2020-03-01', '2020-05-17')
+idx19 = pd.date_range('2019-03-01', '2019-06-30')
+idx20 = pd.date_range('2020-03-01', '2020-06-30')
 
 # read file
 fire19 = gpd.read_file(fp)
 fire20 = gpd.read_file(fp2)
 poly = gpd.read_file(fp3)
 
+# filter low confidence points off
+fire19 = fire19[fire19['CONFIDENCE'] != 'l']
+fire20 = fire20[fire20['CONFIDENCE'] != 'l']
+
 # filepath for figures
-fig_fp = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\figures'
+fig_fp = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\figures\Madagascar'
 
 # function to count sum of fire records and group them by day
 def groupByDate(df, dateindex):
@@ -128,9 +132,9 @@ for i in pas:
     plt.legend(loc='upper left')
     
     # create output figure name
-    figname = fig_fp + '\\' + i + '_n' + '.png'
+    figname = fig_fp + '\\' + i + '.png'
     # save figure
-    plt.savefig(figname, dpi=100, format='png')
+    plt.savefig(figname, dpi=75, format='png')
     # clear plot
     plt.clf()
 

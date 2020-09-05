@@ -12,8 +12,8 @@ import glob
 # filepath
 fp = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\Madagascar\fire15_19\*.shp'
 fp2 = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\Madagascar\2020\fire_mar_jun_2020.shp'
-poly = r'C:\Users\Ap\Documents\ProtectedAreas\Madagascar\WDPA\WDPA_Oct2019_Land_0_1manualClean.shp'
-outfp = r'C:\Users\Ap\Documents\ProtectedAreas\Madagascar\WDPA\WDPA_VIIRSfire_sums_mar_jun_1520.shp'
+poly = r'C:\Users\Ap\Documents\ProtectedAreas\Madagascar\WDPA\WDPA_June2020_Mada_final_PAs2.shp'
+outfp = r'C:\Users\Ap\Documents\ProtectedAreas\Madagascar\WDPA\WDPA_VIIRSfire_sums_mar_jun_1520_finalPAs.shp'
 
 # read polygons
 polys = gpd.read_file(poly)

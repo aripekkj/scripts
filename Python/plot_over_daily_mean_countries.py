@@ -24,14 +24,13 @@ import matplotlib.pyplot as plt
 import pygeos
 
 # filepath for shapefiles where to calculate mean
-fp = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\2015_2019\*.shp' # *look for shapefiles
+fp = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\Madagascar\fire15_19\*.shp' # *look for shapefiles
 # filepath for shapefile to compare to the mean
-fp2 = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\Sub-Sahara\VIIRS_0103_3006_2020_subSahara_PAs.shp'
+fp2 = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\Madagascar\2020\fire_mar_jun_2020.shp'
 # filepath for polygon
-fp3 = r'C:\Users\Ap\Documents\ProtectedAreas\WDPA_subSahara\WDPA_June2020_subSahara_country_dissolve.shp'
+fp3 = r'C:\Users\Ap\Documents\ProtectedAreas\Madagascar\WDPA\WDPA_Oct2019_Land_0_1manualClean.shp'
 # filepath for figure output
-fig_dir = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\Sub-Sahara\figures'
-
+fig_dir = r'C:\Users\Ap\Documents\ProtectedAreas\FireAlert\figures\Madagascar'
 
 # function to count sum and group them by day
 def groupByDate(df, dateindex):
@@ -211,17 +210,18 @@ while i < len(poly):
     r3 = [x + barwidth for x in r2]
     
     plt.xticks(rotation='vertical', fontsize=3)
+    plt.ylim(0,50)
     plt.bar(r2, merged['avg'], color='b', width=barwidth, label='2015-2019 average')
     plt.bar(r3, grouped20['sum2020'], color='r', width=barwidth, label='2020')
     plt.xticks([r + barwidth for r in range(len(merged['MM-DD']))], merged['MM-DD'])
-    plt.title('FIRMS VIIRS data on ' + str(single_poly['PARENT_ISO'].iloc[0]) + ' protected areas')
+    plt.title('FIRMS VIIRS active fires on ' + str(single_poly['NAME'].iloc[0]))
     plt.ylabel('Number of active fires / thermal anomalies')
     plt.xlabel('Date')
     plt.legend(loc='upper left')
     #plt.text(len(r1),-100, s=copyright_string, horizontalalignment='right', fontsize=5)
     
-    fig_fp = fig_dir + '\\' +  str(single_poly['PARENT_ISO'].iloc[0]) + '.png' 
-    plt.savefig(fig_fp, dpi=300, format='png')
+    fig_fp = fig_dir + '\\' +  str(single_poly['NAME'].iloc[0]) + '.png' 
+    plt.savefig(fig_fp, dpi=100, format='png')
     
     # clear plot
     plt.clf()

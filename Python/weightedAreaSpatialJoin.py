@@ -15,9 +15,9 @@ import geopandas as gpd
 
 
 # filepath
-fp = r'E:\LocalData\aripekkj\ProtectedAreas\Madagascar\INSTAT\mdg_adm1_region_df.shp'
-fp2 = r'E:\LocalData\aripekkj\ProtectedAreas\Madagascar\WDPA\WDPA_June2020_Mada_final_PAs2.shp'
-out_fp = r'E:\LocalData\aripekkj\ProtectedAreas\Madagascar\INSTAT\mdg_adm1_region_df_test_overlay.shp' 
+fp = r'C:\Users\HY\Documents\ProtectedAreas\INSTAT\mdg_adm1_region_df.shp'
+fp2 = r'C:\Users\HY\Documents\ProtectedAreas\WDPA\WDPA_June2020_Mada_final_PAs2.shp'
+out_fp = r'C:\Users\HY\Documents\ProtectedAreas\INSTAT\mdg_adm1_region_df_test_overlay.shp' 
 
 # read file
 region = gpd.read_file(fp)
@@ -52,8 +52,12 @@ for idx, row in region_utm.iterrows():
     
 region_utm['area_prop']
 
-
-
+# compute weighted mean for INSTAT columns
+region_utm['Econ_det_w'] = region_utm['Econ_deter'] * region_utm['area_prop']
+region_utm['Nr_of_HH_w'] = region_utm['Nr_of_HH'] * region_utm['area_prop']
+region_utm['PoorFood_w'] = region_utm['Poor_food_'] * region_utm['area_prop']
+region_utm['noFoodAl_w'] = region_utm['no_food_al'] * region_utm['area_prop']
+region_utm['FoodSecA_w'] = region_utm['food_sec_a'] * region_utm['area_prop']
 
 
 

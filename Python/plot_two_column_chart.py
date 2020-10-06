@@ -49,7 +49,7 @@ ax.set_xlabel('Protected area')
 ax.grid(True, which='both', axis='y', linestyle='--', linewidth=0.5)
 
 # title
-ax.set_title('Visitors on Madagascar protected areas')
+ax.set_title('Visitors on Madagascar protected areas 2005-2018')
 
 fig.tight_layout(pad=5)
 #plt.show()
